@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230b1020'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='IBM Plex Mono, ui-monospace, Menlo, monospace' font-weight='700' font-size='34' fill='%23ffb347'%3E%5B%5D%3C/text%3E%3C/svg%3E">
+  <link rel="alternate icon" type="image/png" sizes="32x32" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b1020'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-weight='700' font-size='20' fill='%23ffb347'%3E%5B%5D%3C/text%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%230b1020'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-weight='700' font-size='90' fill='%23ffb347'%3E%5B%5D%3C/text%3E%3C/svg%3E">
+  <meta name="theme-color" content="#0b1020">
+
+  <title>Адаптивная вёрстка сайтов — Андрей</title>
+  <meta name="description" content="Высокое качество вёрстки, которое выделяет ваш бизнес среди конкурентов. Адаптив, анимация, привязка к WordPress.">
+  <meta property="og:title" content="Адаптивная вёрстка сайтов">
+  <meta property="og:description" content="Высокое качество вёрстки, которое выделяет ваш бизнес среди конкурентов.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-2: #0f1628;
+      --bg-3: #131a30;
+      --line: #1c2540;
+      --line-2: #273357;
+      --ink: #eef1fa;
+      --muted: #8994b5;
+      --muted-2: #5c6685;
+      --amber: #ffb347;
+      --amber-2: #ff8f2e;
+      --amber-glow: 0 0 20px rgba(255, 179, 71, .35);
+      --container: 1200px;
+      --ease-smooth: cubic-bezier(.22, .61, .36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(rgba(255, 179, 71, .07) 1px, transparent 1.4px),
+        radial-gradient(rgba(255, 179, 71, .07) 1px, transparent 1.4px);
+      background-size: 32px 32px;
+      background-position: 0 0, 16px 16px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(900px 500px at 85% -10%, rgba(255, 143, 46, .10), transparent 60%),
+        radial-gradient(700px 500px at -10% 100%, rgba(80, 100, 200, .08), transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    h1, h2, h3 {
+      line-height: 1.3;
+      margin: 0 0 .5em;
+      letter-spacing: -.025em;
+      font-weight: 700;
+    }
+    h1 {
+      font-size: clamp(2.1rem, 1.3rem + 3.4vw, 4.1rem);
+      text-transform: uppercase;
+      letter-spacing: -.03em;
+    }
+    h2 {
+      font-size: clamp(1.7rem, 1.1rem + 2vw, 2.6rem);
+      margin-bottom: .9em;
+      text-transform: uppercase;
+      letter-spacing: -.025em;
+    }
+    h3 { font-size: clamp(1.05rem, .9rem + .5vw, 1.3rem); }
+
+    p { margin: 0 0 1em; }
+
+    .mono { font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace; }
+
+    .container {
+      width: min(100% - 40px, var(--container));
+      margin-inline: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sec-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .76rem;
+      color: var(--amber);
+      letter-spacing: .08em;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .sec-label::before { content: "["; color: var(--muted-2); }
+    .sec-label::after { content: "]"; color: var(--muted-2); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55em;
+      padding: .9em 1.5em;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      font-size: .82rem;
+      letter-spacing: .06em;
+      border: 1px solid var(--amber);
+      background: var(--amber);
+      color: #131a30;
+      cursor: pointer;
+      transition: background .35s ease, color .35s ease, box-shadow .45s ease, transform .35s var(--ease-smooth);
+      text-align: center;
+      white-space: nowrap;
+      text-transform: uppercase;
+    }
+    .btn:hover {
+      background: transparent;
+      color: var(--amber);
+      box-shadow: var(--amber-glow);
+    }
+    .btn:active { transform: translateY(1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--line-2);
+    }
+    .btn-outline:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .btn-light {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+    }
+    .btn-light:hover {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--ink);
+      box-shadow: none;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(11, 16, 32, .82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 66px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -.01em;
+    }
+    .brand-bracket { color: var(--amber); font-weight: 600; }
+    .brand-caret {
+      display: inline-block;
+      width: 8px;
+      height: 1.05em;
+      background: var(--amber);
+      margin-left: 2px;
+      vertical-align: -2px;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .15; }
+    }
+
+    .nav-desktop { display: flex; gap: 22px; }
+    .nav-desktop a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .82rem;
+      color: var(--muted);
+      padding: 4px 0;
+      position: relative;
+      transition: color .35s ease;
+    }
+    .nav-desktop a::before {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 1px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .5s var(--ease-smooth);
+    }
+    .nav-desktop a:hover { color: var(--amber); }
+    .nav-desktop a:hover::before { transform: scaleX(1); }
+
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+
+    .socials { display: flex; gap: 6px; }
+    .socials a {
+      width: 34px; height: 34px;
+      display: grid; place-items: center;
+      border: 1px solid var(--line-2);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: border-color .35s ease, color .35s ease, box-shadow .45s ease;
+    }
+    .socials a:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+      box-shadow: var(--amber-glow);
+    }
+
+    .nav-mobile { display: none; position: relative; }
+    .nav-mobile summary {
+      list-style: none;
+      cursor: pointer;
+      width: 38px; height: 38px;
+      display: grid; place-items: center;
+      border: 1px solid var(--line-2);
+      color: var(--ink);
+      font-family: 'IBM Plex Mono', monospace;
+      user-select: none;
+    }
+    .nav-mobile summary::-webkit-details-marker { display: none; }
+    .nav-mobile summary::before { content: "[≡]"; font-size: .85rem; }
+    .nav-mobile[open] summary::before { content: "[×]"; }
+    .nav-mobile[open] summary { border-color: var(--amber); color: var(--amber); }
+    .nav-mobile .menu-panel {
+      position: absolute;
+      top: calc(100% + 8px); right: 0;
+      min-width: 240px;
+      background: var(--bg-2);
+      border: 1px solid var(--line-2);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(0,0,0,.6);
+    }
+    .nav-mobile .menu-panel a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .85rem;
+      color: var(--muted);
+      padding: 10px 12px;
+      border-left: 2px solid transparent;
+      transition: color .35s ease, border-color .35s ease, background .35s ease;
+    }
+    .nav-mobile .menu-panel a:hover {
+      color: var(--amber);
+      border-color: var(--amber);
+      background: rgba(255, 179, 71, .06);
+    }
+
+    .hero {
+      position: relative;
+      padding: clamp(56px, 8vw, 110px) 0 clamp(56px, 7vw, 90px);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(28px, 4vw, 64px);
+      align-items: center;
+    }
+    .hero h1 .accent {
+      color: var(--amber);
+      text-shadow: var(--amber-glow);
+    }
+    .hero p {
+      font-size: clamp(.95rem, .85rem + .35vw, 1.1rem);
+      color: var(--muted);
+      max-width: 46ch;
+      margin-top: 22px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .hero-img {
+      width: 100%;
+      border: 1px solid var(--line-2);
+      filter: contrast(1.05) saturate(0.9);
+    }
+
+    .section { padding: clamp(56px, 7vw, 100px) 0; border-bottom: 1px solid var(--line); }
+    .section-alt { background: var(--bg-2); }
+    .section:last-of-type { border-bottom: 0; }
+
+    .sec-head { margin-bottom: 36px; max-width: 720px; }
+    .sec-head p { color: var(--muted); margin: 0; }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .card {
+      position: relative;
+      background: var(--bg-2);
+      border: 1px solid var(--line-2);
+      padding: 28px 24px;
+      transition: border-color .4s ease, transform .5s var(--ease-smooth), box-shadow .5s ease;
+    }
+    .card .corner {
+      position: absolute;
+      top: 10px; right: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .72rem;
+      color: var(--muted-2);
+      transition: color .4s ease;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      left: -1px; top: -1px;
+      width: 14px; height: 14px;
+      border-left: 2px solid var(--amber);
+      border-top: 2px solid var(--amber);
+      opacity: 0;
+      transition: opacity .45s ease;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      right: -1px; bottom: -1px;
+      width: 14px; height: 14px;
+      border-right: 2px solid var(--amber);
+      border-bottom: 2px solid var(--amber);
+      opacity: 0;
+      transition: opacity .45s ease;
+    }
+    .card:hover {
+      border-color: var(--line-2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .card:hover::before,
+    .card:hover::after { opacity: 1; }
+    .card:hover .corner { color: var(--amber); }
+    .card .num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .78rem;
+      color: var(--amber);
+      margin-bottom: 12px;
+      letter-spacing: .04em;
+    }
+    .card p { color: var(--muted); margin: 0; font-size: .95rem; }
+
+    .section-cta { display: flex; justify-content: center; margin-top: 32px; }
+
+    .advantages {
+      display: grid;
+      grid-template-columns: 300px 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .advantages img.man {
+      width: 100%;
+      border: 1px solid var(--line-2);
+      filter: contrast(1.05) saturate(0.9);
+    }
+    .adv-block {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 24px;
+      transition: transform .5s var(--ease-smooth);
+    }
+    .adv-block::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--amber);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .95rem;
+      opacity: .5;
+      transform: translateX(-4px);
+      transition: opacity .4s ease, transform .5s var(--ease-smooth);
+    }
+    .adv-block:hover::before { opacity: 1; transform: translateX(0); }
+    .adv-block:hover { transform: translateX(2px); }
+    .adv-block p { color: var(--muted); margin: 0; font-size: .95rem; }
+    .advantages .btn { margin-top: 6px; }
+
+    .portfolio {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .work {
+      position: relative;
+      display: block;
+      border: 1px solid var(--line-2);
+      background: var(--bg-2);
+      overflow: hidden;
+      transition: border-color .4s ease, transform .5s var(--ease-smooth), box-shadow .5s ease;
+    }
+    .work:hover {
+      border-color: var(--amber);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .work img {
+      width: 100%;
+      filter: contrast(1.05) saturate(0.9);
+      transition: transform .8s var(--ease-smooth), filter .5s ease;
+    }
+    .work:hover img { transform: scale(1.02); filter: contrast(1.05) saturate(1.05); }
+    .work-info {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .work-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .9rem;
+      font-weight: 500;
+    }
+    .work-price {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .85rem;
+      color: var(--amber);
+      white-space: nowrap;
+    }
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(11, 16, 32, .82);
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      transition: opacity .45s ease;
+      pointer-events: none;
+    }
+    .work:hover .work-overlay,
+    .work:focus-visible .work-overlay { opacity: 1; }
+    .work-overlay .btn { pointer-events: none; }
+
+    .cta-banner {
+      position: relative;
+      background: var(--bg-2);
+      border: 1px solid var(--line-2);
+      padding: clamp(28px, 4vw, 48px);
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 36px;
+      align-items: center;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: "";
+      position: absolute;
+      width: 420px; height: 420px;
+      right: -170px; top: -170px;
+      background: radial-gradient(circle, rgba(255, 179, 71, .14), transparent 60%);
+      pointer-events: none;
+    }
+    .cta-banner > * { position: relative; z-index: 1; }
+    .cta-banner h2 { margin-bottom: .3em; }
+    .cta-banner p { color: var(--muted); margin: 0; }
+
+    .form { display: grid; gap: 16px; }
+    .form label.field { display: grid; gap: 6px; }
+    .form label.field span {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .72rem;
+      color: var(--amber);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .form input[type="text"],
+    .form input[type="tel"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line-2);
+      background: var(--bg);
+      color: var(--ink);
+      font: inherit;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .4s ease, box-shadow .45s ease;
+    }
+    .form input::placeholder { color: var(--muted-2); }
+    .form input:focus {
+      border-color: var(--amber);
+      box-shadow: 0 0 0 3px rgba(255, 179, 71, .12);
+    }
+    .form .consent {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    .form .consent input { margin-top: 4px; accent-color: var(--amber); }
+    .form .consent a { color: var(--amber); border-bottom: 1px solid var(--amber); }
+    .form .btn { justify-self: start; }
+    .form-status { font-family: 'IBM Plex Mono', monospace; font-size: .8rem; min-height: 1.2em; }
+    .form-status.ok { color: var(--amber); }
+    .form-status.err { color: #ff7a7a; }
+
+    .about {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .about img {
+      width: 100%;
+      border: 1px solid var(--line-2);
+      filter: contrast(1.05) saturate(0.9);
+    }
+    .about-text p { color: var(--muted); margin-bottom: .9em; }
+    .about-text p:first-child {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--amber);
+      font-size: 1rem;
+    }
+    .about-text .btn { margin-top: 8px; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      counter-reset: step;
+    }
+    .step {
+      position: relative;
+      background: var(--bg-2);
+      border: 1px solid var(--line-2);
+      padding: 26px 22px;
+      transition: border-color .4s ease, transform .5s var(--ease-smooth);
+    }
+    .step:hover { border-color: var(--amber); transform: translateY(-2px); }
+    .step::before {
+      counter-increment: step;
+      content: "[" counter(step, decimal-leading-zero) "]";
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .78rem;
+      color: var(--amber);
+      margin-bottom: 10px;
+      letter-spacing: .04em;
+    }
+    .step p { color: var(--muted); margin: 0; font-size: .95rem; }
+
+    .site-footer {
+      background: var(--bg);
+      border-top: 1px solid var(--line-2);
+      padding: 56px 0 28px;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .site-footer h3 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .78rem;
+      color: var(--amber);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    .site-footer a { color: var(--muted); transition: color .35s ease; }
+    .site-footer a:hover { color: var(--amber); }
+    .footer-links { display: grid; gap: 8px; }
+    .footer-links a { font-family: 'IBM Plex Mono', monospace; font-size: .85rem; }
+    .footer-socials { display: flex; gap: 8px; }
+    .footer-socials a {
+      width: 38px; height: 38px;
+      display: grid; place-items: center;
+      border: 1px solid var(--line-2);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .72rem;
+      font-weight: 500;
+      transition: border-color .35s ease, color .35s ease, box-shadow .45s ease;
+    }
+    .footer-socials a:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+      box-shadow: var(--amber-glow);
+    }
+    .footer-bottom {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .75rem;
+      color: var(--muted-2);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom a { color: var(--muted); }
+
+    /* ---------- Плавное появление ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .9s var(--ease-smooth), transform .9s var(--ease-smooth);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    /* Каскадное появление в сетках */
+    .services .reveal:nth-child(2),
+    .portfolio .reveal:nth-child(2),
+    .steps .reveal:nth-child(2) { transition-delay: .08s; }
+    .services .reveal:nth-child(3),
+    .portfolio .reveal:nth-child(3),
+    .steps .reveal:nth-child(3) { transition-delay: .16s; }
+    .portfolio .reveal:nth-child(4),
+    .steps .reveal:nth-child(4) { transition-delay: .24s; }
+    .portfolio .reveal:nth-child(5) { transition-delay: .32s; }
+    .portfolio .reveal:nth-child(6) { transition-delay: .4s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      * { animation: none !important; transition: none !important; }
+    }
+
+    @media (max-width: 991px) {
+      .nav-desktop, .socials { display: none; }
+      .nav-mobile { display: block; }
+
+      .hero .container { grid-template-columns: 1fr; }
+      .hero-img { max-width: 520px; justify-self: center; }
+
+      .services { grid-template-columns: 1fr 1fr; }
+      .portfolio { grid-template-columns: 1fr 1fr; }
+
+      .advantages { grid-template-columns: 1fr; }
+      .advantages img.man { max-width: 300px; }
+
+      .cta-banner { grid-template-columns: 1fr; }
+
+      .about { grid-template-columns: 1fr; }
+      .about img { max-width: 300px; }
+
+      .steps { grid-template-columns: 1fr 1fr; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .services, .portfolio, .steps, .footer-grid { grid-template-columns: 1fr; }
+      .hero-actions .btn { width: 100%; }
+      .form .btn { width: 100%; justify-self: stretch; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="#top" class="brand" aria-label="На главную">
+        <span class="brand-bracket">[</span>
+        <span>andrey<span style="color:var(--amber)">.dev</span></span>
+        <span class="brand-bracket">]</span>
+        <span class="brand-caret"></span>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Основная навигация">
+        <a href="#services">услуги</a>
+        <a href="#advantages">преимущества</a>
+        <a href="#portfolio">портфолио</a>
+        <a href="#about">обо мне</a>
+        <a href="#contacts">контакты</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="socials" aria-label="Соцсети">
+          <a href="https://vk.com/username" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">VK</a>
+          <a href="https://wa.me/70000000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WA</a>
+          <a href="https://t.me/username" target="_blank" rel="noopener noreferrer" aria-label="Telegram">TG</a>
+        </div>
+
+        <details class="nav-mobile">
+          <summary aria-label="Открыть меню"></summary>
+          <div class="menu-panel">
+            <a href="#services">услуги</a>
+            <a href="#advantages">преимущества</a>
+            <a href="#portfolio">портфолио</a>
+            <a href="#about">обо мне</a>
+            <a href="#contacts">контакты</a>
+            <a href="#banner" class="btn" style="margin-top:8px;">Заказать</a>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <section class="hero">
+      <div class="container">
+        <div class="reveal">
+          <span class="sec-label">online · с 2017 года</span>
+          <h1>адаптивная <span class="accent">вёрстка</span><br><span class="accent">сайта</span> для всех устройств</h1>
+          <p>Высокое качество вёрстки увеличит посещаемость вашего сайта и выделит бизнес среди конкурентов.</p>
+          <div class="hero-actions">
+            <a href="#banner" class="btn">Заказать верстку</a>
+            <a href="#portfolio" class="btn btn-outline">Посмотреть работы</a>
+          </div>
+        </div>
+        <img
+          class="hero-img reveal"
+          src="https://cdn.prod.website-files.com/5d9eee914a6e6c0a5509e5be/66d9aef6d77586a0c3ede68e_image%201.webp"
+          alt="Устройства: смартфон, планшет и ноутбук"
+          width="607" height="607"
+          loading="eager" fetchpriority="high">
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <div class="container">
+        <div class="sec-head reveal">
+          <span class="sec-label">01 / услуги</span>
+          <h2>Что я делаю</h2>
+          <p>Чтобы сайт выглядел и работал идеально на любом устройстве.</p>
+        </div>
+
+        <div class="services">
+          <article class="card reveal">
+            <span class="corner">[01]</span>
+            <div class="num">// 01</div>
+            <h3>Адаптивная верстка</h3>
+            <p>Гарантия идеального вида сайта на любых экранах и в любых браузерах.</p>
+          </article>
+          <article class="card reveal">
+            <span class="corner">[02]</span>
+            <div class="num">// 02</div>
+            <h3>Анимация сайта</h3>
+            <p>Анимация сделает ваш сайт более современным и привлекательным.</p>
+          </article>
+          <article class="card reveal">
+            <span class="corner">[03]</span>
+            <div class="num">// 03</div>
+            <h3>Привязка к Вордпресс</h3>
+            <p>Подключение и настройка файлов сайта к платформе Вордпресс.</p>
+          </article>
+        </div>
+
+        <div class="section-cta reveal">
+          <a href="#banner" class="btn" data-cta="services">Заказать верстку</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="advantages" class="section section-alt">
+      <div class="container">
+        <div class="sec-head reveal">
+          <span class="sec-label">02 / преимущества</span>
+          <h2>Почему я</h2>
+          <p>Заказчики выбирают меня и остаются надолго.</p>
+        </div>
+
+        <div class="advantages">
+          <img class="man reveal"
+               src="https://cdn.prod.website-files.com/5d9eee914a6e6c0a5509e5be/66673da7ff04673f4c315a10_man.webp"
+               alt="Мужчина с ноутбуком"
+               width="280" height="373" loading="lazy">
+
+          <div class="reveal">
+            <div class="adv-block">
+              <h3>Качество работы</h3>
+              <p>Оптимизация изображений и шрифтов для быстрой загрузки страниц.</p>
+            </div>
+            <div class="adv-block">
+              <h3>Гарантированные сроки</h3>
+              <p>Предусматриваю резервное время на непредвиденные ситуации, чтобы гарантированно уложиться в согласованные сроки.</p>
+            </div>
+            <a href="#banner" class="btn" data-cta="advantages">Заказать верстку</a>
+          </div>
+
+          <div class="reveal">
+            <div class="adv-block">
+              <h3>Оперативность в работе</h3>
+              <p>Всегда на связи с заказчиком и оперативно реагирую на его вопросы.</p>
+            </div>
+            <div class="adv-block">
+              <h3>Pixel Perfect верстка</h3>
+              <p>Использую инструменты для проверки Pixel Perfect, чтобы удостовериться в точности верстки на всех устройствах и разрешениях экранов.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio" class="section">
+      <div class="container">
+        <div class="sec-head reveal">
+          <span class="sec-label">03 / портфолио</span>
+          <h2>Последние проекты</h2>
+          <p>От лендингов до корпоративных сайтов.</p>
+        </div>
+
+        <div class="portfolio">
+          <a class="work reveal" href="http://h962157i.beget.tech/portfolio/truck/" target="_blank" rel="noopener noreferrer">
+            <img src="https://cdn.prod.website-files.com/5d9eee914a6e6c0a5509e5be/667af1e6b99402a0ab7f5add_truck.webp" alt="Сайт грузоперевозок" loading="lazy">
+            <div class="work-info">
+              <span class="work-title">Грузоперевозки</span>
+              <span class="work-price">15 000 ₽</span>
+            </div>
+            <div class="work-overlay"><span class="btn btn-light">Посмотреть</span></div>
+          </a>
+
+          <a class="work reveal" href="http://h962157i.beget.tech/portfolio/salon/" target="_blank" rel="noopener noreferrer">
+            <img src="https://cdn.prod.website-files.com/5d9eee914a6e6c0a5509e5be/667d873570d6080cf95af0cc_Frame%20336534%20(1).webp" alt="Сайт салона красоты" loading="lazy">
+            <div class="work-info">
+              <span class="work-title">Салон Красоты</span>
+              <span class="work-price">9 000 ₽</span>
+            </div>
+            <div class="work-overlay"><span class="btn btn-light">Посмотреть</span></div>
+          </a>
+
+          <a class="work reveal" href="http://h962157i.beget.tech/portfolio/auto/" target="_blank" rel="noopener noreferrer">
+            <img src="https://cdn.prod.website-files.com/5d9eee914a6e6c0a5509e5be/665892cc2261a44a07f5fc22_img6.webp" alt="Сайт автомойки" loading="lazy">
+            <div class="work-info">
+              <span class="work-title">Автомойка</span>
+              <span class="work-price">8 000 ₽</span>
+            </div>
+            <div class="work-overlay"><span class="btn btn-light">Посмотреть</span></div>
+          </a>
+
+          <a class="work reveal" href="http://h962157i.beget.tech/portfolio/flip/" target="_blank" rel="noopener noreferrer">
+            <img src="https://cdn.prod.website-files.com/5d9eee914a6e6c0a5509e5be/665892c8e66f363dff4419fb_img4.webp" alt="Сайт телефона Flip x9" loading="lazy">
+            <div class="work-info">
+              <span class="work-title">Flip x9</span>
+              <span class="work-price">9 000 ₽</span>
+            </div>
+            <div class="work-overlay"><span class="btn btn-light">Посмотреть</span></div>
+          </a>
+
+          <a class="work reveal" href="http://h962157i.beget.tech/portfolio/souz/" target="_blank" rel="noopener noreferrer">
+            <img src="https://cdn.prod.website-files.com/5d9eee914a6e6c0a5509e5be/665892cd310c454854f94b6b_img5.webp" alt="Сайт делового союза" loading="lazy">
+            <div class="work-info">
+              <span class="work-title">Деловой союз</span>
+              <span class="work-price">11 000 ₽</span>
+            </div>
+            <div class="work-overlay"><span class="btn btn-light">Посмотреть</span></div>
+          </a>
+
+          <a class="work reveal" href="http://h962157i.beget.tech/portfolio/asg/" target="_blank" rel="noopener noreferrer">
+            <img src="https://cdn.prod.website-files.com/5d9eee914a6e6c0a5509e5be/665892c78df520991fce0ab3_img1.webp" alt="Сайт дистрибьюции" loading="lazy">
+            <div class="work-info">
+              <span class="work-title">Дистрибьюция</span>
+              <span class="work-price">7 000 ₽</span>
+            </div>
+            <div class="work-overlay"><span class="btn btn-light">Посмотреть</span></div>
+          </a>
+        </div>
+
+        <div class="section-cta reveal">
+          <a href="#banner" class="btn" data-cta="portfolio">Заказать верстку</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="banner" class="section">
+      <div class="container">
+        <div class="cta-banner reveal">
+          <div>
+            <span class="sec-label">04 / контакт</span>
+            <h2>Давайте созвонимся?</h2>
+            <p>Заполните форму — я перезвоню и отвечу на все вопросы.</p>
+          </div>
+
+          <form class="form" id="contact-form" novalidate>
+            <label class="field">
+              <span>Имя</span>
+              <input type="text" name="name" autocomplete="name" placeholder="Как к вам обращаться" required>
+            </label>
+
+            <label class="field">
+              <span>Телефон</span>
+              <input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
+            </label>
+
+            <label class="consent">
+              <input type="checkbox" name="consent" required>
+              <span>Согласен на обработку данных и принимаю <a href="policy.html" target="_blank" rel="noopener noreferrer">политику конфиденциальности</a></span>
+            </label>
+
+            <button type="submit" class="btn">Отправить</button>
+            <div class="form-status" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section section-alt">
+      <div class="container">
+        <div class="sec-head reveal">
+          <span class="sec-label">05 / обо мне</span>
+          <h2>Кто будет делать ваш проект</h2>
+        </div>
+
+        <div class="about">
+          <img class="reveal"
+               src="https://cdn.prod.website-files.com/5d9eee914a6e6c0a5509e5be/6a90506559abc88f896bf8b8_image%20(1).png"
+               alt="Андрей, веб-разработчик"
+               width="280" height="373" loading="lazy">
+
+          <div class="about-text reveal">
+            <p>Меня зовут Андрей.</p>
+            <p>С 2017 года я делаю адаптивные веб-сайты на HTML, CSS, JS с использованием относительных единиц, таких как em, %, vw и vh.</p>
+            <p>Делаю анимацию, которая привлекает больше клиентов и выделяет ваш сайт на фоне конкурентов.</p>
+            <p>Переношу дизайн из Figma и Pixso на живые веб-сайты, сохраняя каждую деталь дизайна. Мой опыт создания более 100 проектов гарантирует успешное воплощение ваших идей в функциональный и стильный веб-сайт.</p>
+            <a href="#banner" class="btn" data-cta="about">Заказать верстку</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="sec-head reveal">
+          <span class="sec-label">06 / процесс</span>
+          <h2>Этапы работы</h2>
+          <p>От брифа до передачи готового проекта.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step reveal">
+            <h3>Анализ требований</h3>
+            <p>Определение оптимальных технологий и подходов для реализации проекта.</p>
+          </div>
+          <div class="step reveal">
+            <h3>Верстка с акцентом на качество</h3>
+            <p>Верстка макетов с применением самых современных методов.</p>
+          </div>
+          <div class="step reveal">
+            <h3>Оптимизация и доработка</h3>
+            <p>Оптимизация скорости загрузки страниц за счёт сокращения ресурсов.</p>
+          </div>
+          <div class="step reveal">
+            <h3>Сдача проекта заказчику</h3>
+            <p>Передача готового проекта клиенту и установка файлов на хостинг клиента.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contacts" class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3>Контакты</h3>
+          <p style="margin:0 0 8px;color:var(--muted)">Андрей — адаптивная вёрстка сайтов</p>
+          <p style="margin:0 0 8px;"><a href="mailto:hello@example.com">hello@example.com</a></p>
+          <p style="margin:0;"><a href="tel:+70000000000">+7 (000) 000-00-00</a></p>
+        </div>
+
+        <div>
+          <h3>Навигация</h3>
+          <div class="footer-links">
+            <a href="#services">услуги</a>
+            <a href="#advantages">преимущества</a>
+            <a href="#portfolio">портфолио</a>
+            <a href="#about">обо мне</a>
+            <a href="#banner">заказать</a>
+          </div>
+        </div>
+
+        <div>
+          <h3>Соцсети</h3>
+          <div class="footer-socials">
+            <a href="https://vk.com/username" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">VK</a>
+            <a href="https://wa.me/70000000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WA</a>
+            <a href="https://t.me/username" target="_blank" rel="noopener noreferrer" aria-label="Telegram">TG</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>[andrey.dev] © <span id="year"></span> — все права защищены</span>
+        <a href="policy.html">политика конфиденциальности</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    (function () {
+      var items = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+
+    (function () {
+      var form = document.getElementById('contact-form');
+      if (!form) return;
+      var status = form.querySelector('.form-status');
+      var btn = form.querySelector('button[type="submit"]');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        status.className = 'form-status';
+        status.textContent = '';
+
+        var name = form.name.value.trim();
+        var phone = form.phone.value.trim();
+        var consent = form.consent.checked;
+
+        if (name.length < 2) { status.classList.add('err'); status.textContent = '[err] укажите имя'; return; }
+        if (phone.replace(/\D/g, '').length < 10) { status.classList.add('err'); status.textContent = '[err] некорректный телефон'; return; }
+        if (!consent) { status.classList.add('err'); status.textContent = '[err] нужно согласие'; return; }
+
+        btn.disabled = true;
+        btn.textContent = 'Отправка…';
+
+        setTimeout(function () {
+          btn.disabled = false;
+          btn.textContent = 'Отправить';
+          form.reset();
+          status.classList.add('ok');
+          status.textContent = '[ok] заявка принята, свяжусь с вами';
+        }, 700);
+      });
+    })();
+  </script>
+
+</body>
+</html>
